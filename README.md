@@ -15,7 +15,7 @@ Tal servidor monolítico es una forma natural de acercarse a construir tal siste
 Las aplicaciones monolíticas pueden tener éxito, pero mucha gente se está sintiendo frustrada con ellas - especialmente a medida que más aplicaciones se están desplegando a la nube. Cambiar ciclos que están unidos juntos - un cambio hecho a una pequeña parte de la aplicación, requiere que todo el monolito sea reconstruido y desplegado. Con el tiempo, seguido es difícil mantener una buena estructura modular, haciendo difícil mantener los cambios que deban afectar a un solo módulo dentro de ese módulo. El escalamiento requiere escalamiento de toda la aplicación en lugar de partes de ella que requieren un mayor recurso.
 
  
-# Características de la arquitectura de microservicios
+## Características de la arquitectura de microservicios
 
 No podemos decir que hay una definición formal de del estilo arquitectónico de microservicios, pero podemos tratar de describir que vemos como características comunes para las arquitecturas que se ajusten a la etiqueta. Como con cualquier definición que describa las características comunes, no todas las arquitecturas de microservicios tienen todas las características, pero esperamos que la mayoría de las arquitecturas de microservicios muestren la mayoría de las características. Mientras que nosotros, los autores hemos sido miembros activos de esta algo suelta comunidad, nuestra intención es la de intentar una descripción de lo que vemos en nuestro propio trabajo y en los esfuerzos similares por parte de los equipos que conocemos. En particular, no estamos sentando alguna definición para ajustarse.
 
@@ -35,7 +35,7 @@ Usando servicios como este tiene desventajas. Las llamadas remotas son más cara
 
 En una primera aproximación, se puede observar que los servicios mapean a procesos en tiempo de ejecución, pero eso es sólo a primera aproximación. Un servicio puede consistir en múltiples procesos que siempre serán desarrollados y desplegados juntos, como un proceso de aplicación y una base de datos que sólo es usada por ese servicio.
 
-#Organizado en torno a las capacidades comerciales
+##Organizado en torno a las capacidades comerciales
 
 Al mirar para dividir una aplicación grande en partes, a menudo la gestión se centra en la capa de la tecnología, lo que lleva a los equipos de interfaz de usuario, a los equipos de la lógica del lado del servidor, y a los equipos de base de datos. Cuando los equipos están separados a lo largo de estas líneas, incluso cambios simples pueden dar lugar a un proyecto entre equipos tomando tiempo y aprobación de presupuesto. Un equipo inteligente optimizará alrededor de esto y decidirá por el menor de dos males - simplemente obligar a la lógica en cualquiera aplicación tengan acceso a. La lógica en todas partes, en otras palabras. Este es un ejemplo de la ley de Conway en acción.
 
@@ -53,7 +53,7 @@ Una compañía organizada de esta manera es www.comparethemarket.com. equipos mu
 
 Las grandes aplicaciones monolíticas siempre pueden ser modularizados alrededor de las capacidades de negocio también, aunque ese no es el caso común. Ciertamente se insta a un gran equipo la creación de una aplicación monolítica para dividirse a lo largo de las líneas de negocio. El principal problema que se ha visto aquí, es que tienden a organizarse en torno a demasiados contextos. Si el monolito se extiende por muchos de estos límites modulares puede ser difícil para los miembros individuales de un equipo de encajar en su memoria a corto plazo. Además, se observa que las líneas modulares requieren una gran cantidad de disciplina para hacer cumplir. La separación necesariamente más explícita requerida por los componentes de servicio hace que sea más fácil mantener los límites del equipo clara.
 
-#Productos, no proyectos
+##Productos, no proyectos
 
 La mayoría de los esfuerzos de desarrollo de aplicaciones que se ven usan un modelo de proyecto: donde el objetivo es entregar alguna pieza de software que se considera entonces que esté terminada. Una vez finalizado el software es entregado a una organización de mantenimiento y el equipo del proyecto que lo construyó es disuelto.
 
@@ -63,7 +63,7 @@ La mentalidad del producto, enlaza con la vinculación con las capacidades de ne
 
 No hay ninguna razón por qué este mismo enfoque no puede ser tomado con aplicaciones monolíticas, pero la granularidad más pequeña de los servicios puede hacer que sea más fácil para crear las relaciones personales entre los desarrolladores de servicios y sus usuarios.
 
-#Criterios de valoración inteligentes y tuberías tontas
+##Criterios de valoración inteligentes y tuberías tontas
 
 Cuando se construyen estructuras de comunicación entre los diferentes procesos, se han visto muchos productos y enfoques el estresa, poniendo astucia significativa en el propio mecanismo de comunicación. Un buen ejemplo de esto es el Enterprise Service Bus (ESB), donde los productos ESB a menudo incluyen sofisticadas instalaciones para el enrutamiento de mensajes coreografía transformación, y aplicando las reglas de negocio.
 
@@ -77,7 +77,7 @@ Equipos de microservicios usan los principios y protocolos que la world wide web
 
 El segundo acercamiento de uso común es la mensajería por un bus de mensaje corto. La infraestructura elegida es normalmente tonta (tonta como que actúa como solo como un router del mensaje) - implementaciones sencillas como RabbitMQ o ZeroMQ no hacen mucho más que proporcionar una tela asincrónica confiable - la inteligencia sigue viviendo en los puntos extremos que están produciendo y consumiendo mensajes; en los servicios.
 
-#Gobernanza descentralizada
+##Gobernanza descentralizada
 
 Una de las consecuencias de gobernanza centralizada es la tendencia a estandarizar las plataformas tecnológicas simples. La experiencia demuestra que este enfoque se constriñe - no todo problema es un clavo y no toda solución un martillo. Es preferible utilizar la herramienta adecuada para el trabajo y mientras que las aplicaciones monolíticas pueden tomar ventaja de diferentes lenguajes, en cierta medida, que no es tan común.
 
@@ -89,7 +89,7 @@ Netflix es un buen ejemplo de una organización que sigue esta filosofía. Compa
 
 Para la comunidad de microservicios, los gastos generales son particularmente poco atractivos. Esto no quiere decir que la comunidad no valora los contratos de servicios. Más bien al contrario, ya que tienden a ser muchos más de ellos. Es sólo que ellos están buscando diferentes formas de gestionar dichos contratos. Patrones como "lector tolerante" y "Contratos dirigidos por el consumidor" se aplican a menudo a los microservicios. Estos ayudan a los contratos de servicios en evolucionar de forma independiente. Ejecutando los contratos dirigidos por el consumidor como parte de su construcción incrementa la confianza y proporciona retroalimentación rápida sobre si sus servicios están funcionando. De hecho, se sabe de un equipo en Australia, que dirige la creación de nuevos servicios con contratos dirigidos por el consumidor. Ellos usan herramientas simples que les permiten definir el contrato por un servicio. Esto se convierte en parte de la construcción automatizada antes de código para el nuevo servicio que está aún escrito. El servicio, es luego creado a cabo sólo hasta el punto en que cumple el contrato - un enfoque elegante para evitar el dilema 'YAGNI' al crear nuevo software. Estas técnicas y las herramientas que crecen alrededor de ellos, limitan la necesidad de gestión de contrato central, al disminuir el acoplamiento temporal entre los servicios.
 
-#Gestión de datos descentralizada
+##Gestión de datos descentralizada
 
 La descentralización de la gestión de datos se presenta en un número de maneras diferentes. En el nivel más abstracto, significa que el modelo conceptual del mundo será diferente entre los sistemas.
 
@@ -99,7 +99,7 @@ Así como la descentralización de las decisiones sobre los modelos conceptuales
 
  
 
-#Automatización de infraestructura
+##Automatización de infraestructura
 
 las técnicas de automatización de infraestructura han evolucionado enormemente en los últimos años - la evolución de la nube y AWS en particular, ha reducido la complejidad de las operaciones de construcción, despliegue y microservicios operativos.
 
@@ -110,7 +110,7 @@ Una aplicación monolítica será construida, probada y lanzada través de estos
 
  
 
-#Diseño para el fracaso
+##Diseño para el fracaso
 
 Una consecuencia de usar servicios como componentes, es que las aplicaciones necesitan ser diseñadas para que puedan tolerar el fracaso de los servicios. Cualquier llamada de servicio podría fallar debido a la falta de disponibilidad del proveedor, el cliente tiene que responder a esto con tanta gracia como sea posible. Esto es una desventaja comparada con un diseño monolítico, ya que introduce una complejidad adicional para manejar. La consecuencia es que los equipos de microservicios reflejan constantemente en cómo fallas en el servicio afectan a la experiencia del usuario. El ejército de simios de Netflix induce fallas de servicios e incluso centros de datos durante la jornada de trabajo para poner a prueba tanto la capacidad de recuperación como el monitoreo de la aplicación.
 
@@ -120,13 +120,13 @@ Los monolitos pueden ser construidos para ser tan transparente como un microserv
 
 los equipos de microservicios esperarían ver sofisticadas configuraciones de supervisión y registro para cada servicio individual, como cuadros de mando que muestran el estado "arriba / abajo" y una variedad de métricas relevantes al negocio. Los detalles sobre el estado del interruptor de circuito, el rendimiento actual y la latencia son otros ejemplos a menudo nos encontramos en la naturaleza.
 
-#Diseño evolutivo
+##Diseño evolutivo
 
 Los practicantes de microservicios, por lo general han venido de un fondo de diseño evolutivo y ven la descomposición de servicio como una herramienta más para permitir que los desarrolladores de aplicaciones puedan controlar los cambios en su aplicación sin ralentizar el cambio. El control de cambios no significa necesariamente que la reducción del cambio - con las actitudes y las herramientas adecuadas se pueden realizar cambios frecuentes y rápido, y bien controlados en el software.
 
 El sitio web de The Guardian es un buen ejemplo de una aplicación que fue diseñada y construida como un monolito, pero ha ido evolucionando en una dirección microservicio. El monolito sigue siendo el núcleo de la página web, pero prefieren para añadir nuevas funciones construir microservicios que utilizan la API del monolito. Este enfoque es particularmente útil para aquellas que son inherentemente temporales, como las páginas especializadas para el manejo de un evento deportivo. Dicha parte del sitio web puede ser puesta rápidamente utilizando lenguajes de desarrollo rápido, y es retirada una vez que el evento ha terminado. Se han visto enfoques similares en una institución financiera donde se añaden nuevos servicios para una oportunidad de mercado y se descarta después de unos pocos meses o incluso semanas.
 
-#¿Los microservicios son el futuro?
+##¿Los microservicios son el futuro?
 
 Nuestro principal objetivo al escribir este artículo es explicar las principales ideas y principios de microservicios. Al tomar el tiempo para hacer esto pensamos claramente que el estilo arquitectónico de los microservicios es una idea importante - que vale la pena considerar seriamente para las aplicaciones empresariales. Hemos construido recientemente varios sistemas que utilizan el estilo y conocimientos de otros que han utilizado y favorecido este enfoque.
 
